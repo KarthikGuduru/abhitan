@@ -1105,19 +1105,42 @@
   (function() {
     const screen = document.getElementById('loading-screen');
     let opened = false;
+
+    function tryPlayMusic() {
+      const audio = document.getElementById('bg-music');
+      if (!audio) return;
+      const p = audio.play();
+      if (p) p.then(() => {
+        window._musicStarted = true;
+        const btn = document.getElementById('music-btn');
+        if (btn) { btn.classList.remove('muted'); btn.textContent = '\u266A'; }
+      }).catch(() => {
+        // Browser blocked it (swipe/scroll opened the screen).
+        // Listen for the NEXT real tap anywhere to start music.
+        function retryOnTap() {
+          audio.play().then(() => {
+            window._musicStarted = true;
+            const btn = document.getElementById('music-btn');
+            if (btn) { btn.classList.remove('muted'); btn.textContent = '\u266A'; }
+          }).catch(() => {});
+          document.removeEventListener('click', retryOnTap);
+          document.removeEventListener('touchend', retryOnTap);
+        }
+        document.addEventListener('click', retryOnTap, { once: true });
+        document.addEventListener('touchend', retryOnTap, { once: true });
+      });
+    }
+
     function openInvite() {
       if (opened) return;
       opened = true;
-      // Clean up all listeners
-      ['click','touchstart','touchmove','wheel','scroll','keydown'].forEach(ev => {
+      ['click','touchstart','touchmove','touchend','wheel','keydown'].forEach(ev => {
         screen.removeEventListener(ev, openInvite);
-        document.removeEventListener(ev, openInvite);
         window.removeEventListener(ev, openInvite);
+        document.removeEventListener(ev, openInvite);
       });
       screen.classList.add('hidden');
-      // Start music
-      const audio = document.getElementById('bg-music');
-      if (audio) audio.play().catch(() => {});
+      tryPlayMusic();
       const heroEls = document.querySelectorAll('.reveal');
       heroEls.forEach((el, i) => {
         setTimeout(() => {
@@ -1130,7 +1153,8 @@
     // Tap, click
     screen.addEventListener('click', openInvite);
     screen.addEventListener('touchstart', openInvite);
-    // Swipe (touchmove), scroll wheel, keyboard
+    screen.addEventListener('touchend', openInvite);
+    // Swipe, scroll wheel, keyboard
     screen.addEventListener('touchmove', openInvite, { passive: true });
     window.addEventListener('wheel', openInvite, { passive: true, once: true });
     document.addEventListener('keydown', openInvite, { once: true });
@@ -1307,18 +1331,15 @@
       if (!playing) {
         audio.play().then(() => {
           playing = true;
+          window._musicStarted = true;
           btn.classList.remove('muted');
           btn.textContent = '\u266A';
-        }).catch((err) => { console.log('Audio play blocked:', err); });
+        }).catch(() => {});
       }
     }
 
-    // Auto-start music when user taps the loading screen
-    const ls = document.getElementById('loading-screen');
-    if (ls) {
-      ls.addEventListener('click', startMusic, { once: true });
-      ls.addEventListener('touchstart', startMusic, { once: true });
-    }
+    // Sync with loading-screen music start
+    if (window._musicStarted) { playing = true; btn.classList.remove('muted'); btn.textContent = '\u266A'; }
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
