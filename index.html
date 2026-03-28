@@ -645,6 +645,28 @@
     #music-btn:hover { transform: scale(1.1); background: rgba(253,246,232,1); }
     #music-btn.muted { opacity: 0.5; }
 
+    /* ── BRAINPUDDLE BADGE ── */
+    .bp-badge {
+      position: fixed; bottom: 1.5rem; left: 1.2rem;
+      z-index: 9990;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.4rem 0.9rem;
+      background: rgba(15,30,61,0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(201,148,42,0.3);
+      border-radius: 100px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--gold-light);
+      text-decoration: none;
+      transition: transform 220ms ease-out, background 220ms ease-out, border-color 220ms ease-out;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .bp-badge:hover { transform: scale(1.05); background: rgba(15,30,61,0.95); border-color: var(--gold); }
+    }
+
     /* ── RSVP SECTION ── */
     #rsvp {
       background: #F8E8A0;
@@ -1374,6 +1396,8 @@
     });
   })();
 </script>
+
+<a href="https://brainpuddle.com" target="_blank" class="bp-badge">brainpuddle</a>
 
 </body>
 </html>
