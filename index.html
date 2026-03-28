@@ -82,17 +82,21 @@
       to   { transform: scale(1.04); opacity: 1; }
     }
     .splash-tap-label {
-      font-size: 0.58rem;
-      letter-spacing: 0.45em;
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--bapu-saffron);
       font-family: 'Poppins', sans-serif;
-      margin-top: 1.2rem;
-      animation: tapGlowW 2s ease-in-out infinite;
+      font-weight: 500;
+      margin-top: 1.4rem;
+      padding: 0.6rem 1.6rem;
+      border: 1.5px solid rgba(212,98,10,0.35);
+      border-radius: 100px;
+      animation: tapPulse 1.8s ease-in-out infinite;
     }
-    @keyframes tapGlowW {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
+    @keyframes tapPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 20px rgba(212,98,10,0.2); }
     }
     .loading-text {
       font-family: 'Great Vibes', cursive;
@@ -878,7 +882,7 @@
   <img class="loading-ganesha" src="assets/bapu/bapu-ganesha.png" alt="" aria-hidden="true"
        onerror="this.style.display='none'">
   <div class="loading-text">Om Shree Ganeshay Namah</div>
-  <div class="splash-tap-label">Tap to open</div>
+  <div class="splash-tap-label">Tap or Swipe to open</div>
 </div>
 
 <!-- NAVBAR -->
@@ -1097,13 +1101,23 @@
     document.getElementById('mobile-menu').classList.toggle('open');
   });
 
-  /* ── Loading Screen — tap to open ── */
+  /* ── Loading Screen — any interaction opens ── */
   (function() {
     const screen = document.getElementById('loading-screen');
+    let opened = false;
     function openInvite() {
-      screen.removeEventListener('click', openInvite);
-      screen.removeEventListener('touchstart', openInvite);
+      if (opened) return;
+      opened = true;
+      // Clean up all listeners
+      ['click','touchstart','touchmove','wheel','scroll','keydown'].forEach(ev => {
+        screen.removeEventListener(ev, openInvite);
+        document.removeEventListener(ev, openInvite);
+        window.removeEventListener(ev, openInvite);
+      });
       screen.classList.add('hidden');
+      // Start music
+      const audio = document.getElementById('bg-music');
+      if (audio) audio.play().catch(() => {});
       const heroEls = document.querySelectorAll('.reveal');
       heroEls.forEach((el, i) => {
         setTimeout(() => {
@@ -1113,8 +1127,13 @@
         }, 500);
       });
     }
+    // Tap, click
     screen.addEventListener('click', openInvite);
     screen.addEventListener('touchstart', openInvite);
+    // Swipe (touchmove), scroll wheel, keyboard
+    screen.addEventListener('touchmove', openInvite, { passive: true });
+    window.addEventListener('wheel', openInvite, { passive: true, once: true });
+    document.addEventListener('keydown', openInvite, { once: true });
   })();
 
   /* ── Countdown to March 29, 2026 9:15 AM IST ── */
