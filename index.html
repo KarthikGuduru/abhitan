@@ -731,6 +731,26 @@
       margin-bottom: 1.5rem;
     }
 
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--gold-light);
+      text-decoration: none;
+      opacity: 0.8;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.8; }
+      50% { transform: translateX(-50%) translateY(10px); opacity: 1; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -938,6 +958,12 @@
     <span class="countdown-sep">:</span>
     <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-label">Secs</span></div>
   </div>
+
+  <!-- Scroll hint -->
+  <a href="#invitation" class="scroll-hint" aria-label="Scroll down">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:-10px;opacity:0.5;"><polyline points="6 9 12 15 18 9"/></svg>
+  </a>
 </section>
 
 <!-- INVITATION CARD -->
