@@ -685,8 +685,8 @@
     .bg-photo-clip {
       position: absolute;
       /* Calibrated to photo-frame.png (506×758):
-         crest+lattice band end ~35%, side walls ~21%, base ~17% */
-      top: 35%; left: 21%; right: 21%; bottom: 17%;
+         crest+lattice band end ~35%, side walls ~21%, base ~13% */
+      top: 35%; left: 21%; right: 21%; bottom: 13%;
       overflow: hidden;
       /* Tall Mughal arch at top, straight sides & flat base */
       border-radius: 52% 52% 4% 4% / 32% 32% 4% 4%;
@@ -698,7 +698,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: top center;
+      object-position: center;
       opacity: 0;
       transition: opacity 0.9s ease;
     }
@@ -1099,10 +1099,10 @@
 
       // ── INVITE / CEREMONIES HEADING (170–215vh) — last lanterns ──
       [ 7, 178, 66, 6.6, 0.3, '-6deg', '4deg'],
-      [21, 208, 84, 5.2, 1.1, '-3deg', '7deg'],
-      [39, 193, 50, 7.0, 1.8, '-5deg', '3deg'],
+      [21, 195, 84, 5.2, 1.1, '-3deg', '7deg'],
+      [39, 185, 50, 7.0, 1.8, '-5deg', '3deg'],
       [62, 183, 74, 6.3, 0.5, '-7deg', '4deg'],
-      [94, 200, 86, 6.9, 0.8, '-5deg', '3deg']
+      [94, 192, 86, 6.9, 0.8, '-5deg', '3deg']
     ];
 
     var RISE_DUR = 1.6; // seconds for entry animation
