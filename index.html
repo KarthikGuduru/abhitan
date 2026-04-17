@@ -12,31 +12,28 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cream:       #F3ECBA;
-      --cream-soft:  #FBEDE2;
-      --teal:        #45A086;
-      --olive:       #696B36;
-      --orange:      #E79300;
-      --orange-cta:  #F86800;
-      --beige-bg:    #DCDDA6;
-      --night:       #0D1520;
-      --dusk:        #1a2432;
+      --cream:      #F3ECBA;
+      --cream-soft: #FBEDE2;
+      --teal:       #45A086;
+      --olive:      #696B36;
+      --orange:     #E79300;
+      --orange-cta: #F86800;
+      --night:      #0D1520;
     }
 
-    html, body {
-      overflow-x: hidden;
-    }
+    html, body { overflow-x: hidden; }
     body {
       background: var(--cream-soft);
       color: var(--olive);
-      font-family: 'Cormorant Upright', serif;
+      font-family: 'Cormorant', serif;
       line-height: 1.4;
     }
 
-    /* ───────────────────────────────
+    /* ═══════════════════════════════════════
        ILLUSTRATED WORLD
-       One giant teal/sky backdrop from hero-full-bg.png (1440×7382)
-       ─────────────────────────────── */
+       hero-full-bg.png (1440×7382) scrolls
+       naturally — height set by content only.
+       ═══════════════════════════════════════ */
     .illustrated-world {
       position: relative;
       width: 100%;
@@ -44,7 +41,7 @@
       background-size: 100% auto;
       background-position: top center;
       background-repeat: no-repeat;
-      /* height set by JS to match image natural proportions */
+      /* Height determined by content — background clips naturally */
     }
 
     /* ── FLOATING LANTERNS ── */
@@ -53,21 +50,22 @@
       inset: 0;
       pointer-events: none;
       z-index: 3;
-      overflow: hidden;
+      overflow: visible;
+      will-change: transform;
     }
     .lantern {
       position: absolute;
       transform-origin: 50% 0;
-      animation: lanternFloat var(--dur, 6s) ease-in-out infinite alternate;
+      animation: lanternBob var(--dur, 6s) ease-in-out infinite alternate;
       animation-delay: var(--delay, 0s);
-      opacity: var(--op, 0.88);
     }
-    @keyframes lanternFloat {
-      0%   { transform: translateY(0)     rotate(var(--rot-a, -3deg)); }
-      100% { transform: translateY(-22px) rotate(var(--rot-b, 3deg));  }
+    .lantern img { width: 100%; display: block; }
+    @keyframes lanternBob {
+      0%   { transform: translateY(0)     rotate(var(--ra, -3deg)); }
+      100% { transform: translateY(-20px) rotate(var(--rb,  3deg)); }
     }
 
-    /* ── HERO SECTION ── */
+    /* ── HERO ── */
     .hero-section {
       position: relative;
       width: 100%;
@@ -75,80 +73,41 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding-top: 6vh;
-      z-index: 2;
-    }
-    .hero-ganesha {
-      width: clamp(60px, 8vw, 100px);
-      margin-bottom: 12px;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
-    }
-    .hero-label {
-      font-family: 'Aboreto', cursive;
-      font-size: clamp(10px, 1.2vw, 14px);
-      letter-spacing: 0.22em;
-      color: var(--orange);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .hero-names {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 600;
-      font-size: clamp(44px, 9vw, 120px);
-      line-height: 0.9;
-      color: #2B1A00;
-      text-align: center;
-      letter-spacing: -0.01em;
-    }
-    .hero-names .amp {
-      font-family: 'Cormorant Infant', serif;
-      font-style: italic;
-      font-size: 0.55em;
-      color: var(--teal);
-      display: block;
-      margin: 0.05em 0;
-    }
-    .hero-ornament {
-      width: clamp(260px, 50vw, 600px);
-      margin: 18px auto 0;
-      opacity: 0.85;
-    }
-    .hero-date-badge {
-      margin-top: 18px;
-      background: rgba(255,255,255,0.55);
-      backdrop-filter: blur(8px);
-      border-radius: 999px;
-      padding: 8px 28px;
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(12px, 1.4vw, 15px);
-      font-weight: 500;
-      color: var(--olive);
-      letter-spacing: 0.06em;
-      text-align: center;
-    }
-
-    /* ── PALACE SPACER — scroll through fort illustration ── */
-    .palace-spacer {
-      width: 100%;
-      height: 80vh;
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
       justify-content: center;
-      padding-bottom: 40px;
+      padding: 0 20px;
+      z-index: 2;
     }
-    .palace-spacer-tagline {
-      font-family: 'Cormorant Infant', serif;
-      font-style: italic;
-      font-size: clamp(20px, 3vw, 34px);
-      color: rgba(255,255,255,0.82);
+    .hero-name {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      font-size: clamp(56px, 8.5vw, 120px);
+      letter-spacing: -0.01em;
+      color: var(--cream);
+      text-transform: uppercase;
       text-align: center;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.28);
+      line-height: 0.95;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.18);
+    }
+    .hero-weds {
+      font-family: 'Aboreto', cursive;
+      font-size: clamp(14px, 1.8vw, 22px);
+      letter-spacing: 0.45em;
+      color: var(--cream);
+      text-transform: uppercase;
+      text-align: center;
+      margin: 10px 0;
+      opacity: 0.82;
     }
 
-    /* ── INVITATION SECTION ── */
+    /* ── PALACE SPACER — scroll through fort art ── */
+    .palace-spacer {
+      position: relative;
+      width: 100%;
+      min-height: 85vh;
+      z-index: 2;
+    }
+
+    /* ── INVITATION ── */
     .invite-section {
       position: relative;
       z-index: 2;
@@ -156,85 +115,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 60px 20px 80px;
-    }
-    .invite-eyebrow {
-      font-family: 'Aboreto', cursive;
-      font-size: clamp(9px, 1vw, 12px);
-      letter-spacing: 0.28em;
-      color: var(--orange);
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-    .invite-card {
-      background: rgba(255,255,255,0.62);
-      backdrop-filter: blur(14px);
-      border-radius: 24px;
-      padding: clamp(32px, 5vw, 64px) clamp(28px, 6vw, 72px);
-      max-width: 720px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.10);
-    }
-    .invite-title {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 600;
-      font-size: clamp(30px, 5vw, 58px);
-      color: #2B1A00;
-      line-height: 1.0;
-      margin-bottom: 16px;
-    }
-    .invite-title .italic-name {
-      font-family: 'Cormorant Infant', serif;
-      font-style: italic;
-      color: var(--teal);
-    }
-    .invite-parents {
-      font-family: 'Yaldevi', sans-serif;
-      font-size: clamp(12px, 1.3vw, 15px);
-      color: var(--olive);
-      line-height: 1.8;
-      margin-bottom: 24px;
-    }
-    .invite-parents .line-highlight {
-      font-weight: 600;
-      color: #2B1A00;
-    }
-    .invite-divider {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--orange), transparent);
-      margin: 18px auto;
-    }
-    .invite-details {
-      font-family: 'Cormorant Upright', serif;
-      font-size: clamp(15px, 1.8vw, 20px);
-      color: var(--olive);
-      line-height: 1.9;
-    }
-    .invite-details strong {
-      color: #2B1A00;
-      font-weight: 600;
-    }
-    .invite-venue {
-      margin-top: 16px;
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(11px, 1.2vw, 13px);
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--teal);
-      text-transform: uppercase;
-    }
-
-    /* ── EVENTS SECTION ── */
-    .events-section {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 40px 20px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 80px 20px 80px;
     }
     .section-eyebrow {
       font-family: 'Aboreto', cursive;
@@ -242,31 +123,96 @@
       letter-spacing: 0.28em;
       color: var(--orange);
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       text-align: center;
     }
     .section-heading {
-      font-family: 'Cormorant Upright', serif;
+      font-family: 'Cormorant', serif;
       font-weight: 600;
-      font-size: clamp(30px, 4.5vw, 54px);
+      font-size: clamp(28px, 4vw, 52px);
       color: #2B1A00;
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
+      line-height: 1.1;
+    }
+    .invite-card {
+      background: rgba(255,255,255,0.68);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: clamp(32px, 5vw, 64px) clamp(28px, 7vw, 80px);
+      max-width: 700px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.10);
+    }
+    .invite-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 600;
+      font-size: clamp(26px, 4.5vw, 54px);
+      color: #2B1A00;
+      line-height: 1.0;
+      margin-bottom: 16px;
+    }
+    .invite-title em {
+      font-style: italic;
+      color: var(--teal);
+    }
+    .invite-parents {
+      font-family: 'Yaldevi', sans-serif;
+      font-size: clamp(12px, 1.3vw, 15px);
+      color: var(--olive);
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+    .invite-parents strong { color: #2B1A00; font-weight: 600; }
+    .invite-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+      margin: 18px auto;
+    }
+    .invite-details {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(15px, 1.8vw, 20px);
+      color: var(--olive);
+      line-height: 1.9;
+    }
+    .invite-details strong { color: #2B1A00; font-weight: 700; }
+    .invite-venue {
+      margin-top: 10px;
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(11px, 1.1vw, 13px);
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      color: var(--teal);
+      text-transform: uppercase;
+    }
+
+    /* ── EVENTS ── */
+    .events-section {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 20px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .events-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      max-width: 900px;
+      max-width: 860px;
       width: 100%;
     }
     .event-card {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      position: relative;
-      padding: 36px 20px 32px;
+      padding: 44px 20px 38px;
     }
     .event-card-bg {
       position: absolute;
@@ -274,36 +220,32 @@
       background-image: url('assets/city/event-oval.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
-      z-index: 0;
     }
-    .event-flower-tl,
-    .event-flower-br {
+    .event-flower {
       position: absolute;
-      width: 54px;
+      width: 56px;
       z-index: 2;
       pointer-events: none;
     }
-    .event-flower-tl { top: -6px; left: -6px; }
-    .event-flower-br { bottom: -6px; right: -6px; transform: rotate(180deg); }
-    .event-card-content {
+    .event-flower.tl { top: -8px;  left: -8px; }
+    .event-flower.br { bottom: -8px; right: -8px; transform: rotate(180deg); }
+    .event-inner {
       position: relative;
       z-index: 1;
     }
-    .event-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
+    .event-icon { font-size: 26px; margin-bottom: 10px; }
     .event-name {
-      font-family: 'Cormorant Upright', serif;
+      font-family: 'Cormorant', serif;
       font-weight: 600;
-      font-size: clamp(18px, 2.2vw, 26px);
+      font-size: clamp(17px, 2vw, 24px);
       color: #2B1A00;
       margin-bottom: 6px;
+      line-height: 1.1;
     }
     .event-time {
       font-family: 'Manrope', sans-serif;
-      font-size: clamp(11px, 1.2vw, 13px);
-      font-weight: 600;
+      font-size: clamp(10px, 1.1vw, 12px);
+      font-weight: 700;
       letter-spacing: 0.08em;
       color: var(--orange-cta);
       text-transform: uppercase;
@@ -311,44 +253,38 @@
     }
     .event-desc {
       font-family: 'Yaldevi', sans-serif;
-      font-size: clamp(11px, 1.2vw, 13px);
+      font-size: clamp(11px, 1.1vw, 13px);
       color: var(--olive);
       line-height: 1.5;
     }
 
-    /* ── ROUTE SECTION ── */
+    /* ── ROUTE ── */
     .route-section {
       position: relative;
       z-index: 2;
       width: 100%;
-      padding: 40px 20px 80px;
+      padding: 20px 20px 100px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .route-card {
-      background: rgba(255,255,255,0.60);
-      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.68);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-radius: 24px;
-      padding: 40px 40px 32px;
-      max-width: 700px;
+      padding: 44px 48px 36px;
+      max-width: 660px;
       width: 100%;
       text-align: center;
       box-shadow: 0 16px 48px rgba(0,0,0,0.08);
-      position: relative;
-      overflow: hidden;
-    }
-    .route-car {
-      width: clamp(180px, 30vw, 300px);
-      margin: 20px auto 0;
-      display: block;
     }
     .route-address {
-      font-family: 'Cormorant Upright', serif;
+      font-family: 'Cormorant', serif;
       font-size: clamp(16px, 2vw, 22px);
       color: #2B1A00;
-      line-height: 1.7;
-      margin-bottom: 14px;
+      line-height: 1.8;
+      margin-bottom: 16px;
     }
     .route-map-btn {
       display: inline-flex;
@@ -361,16 +297,21 @@
       font-size: 13px;
       letter-spacing: 0.06em;
       text-decoration: none;
-      padding: 10px 24px;
+      padding: 11px 26px;
       border-radius: 999px;
-      margin-top: 16px;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 6px 20px rgba(248,104,0,0.28);
     }
-    .route-map-btn:hover { opacity: 0.85; }
+    .route-map-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .route-car {
+      width: clamp(180px, 28vw, 280px);
+      margin: 24px auto 0;
+      display: block;
+    }
 
-    /* ───────────────────────────────
-       PINK WORLD — Meet + RSVP + Photos
-       ─────────────────────────────── */
+    /* ═══════════════════════════════════════
+       PINK WORLD
+       ═══════════════════════════════════════ */
     .pink-world {
       position: relative;
       width: 100%;
@@ -379,291 +320,194 @@
       background-position: top center;
       background-repeat: no-repeat;
     }
-    .pink-world-inner {
-      position: relative;
-      z-index: 2;
-      padding-top: 80px;
-    }
+    .pink-world-inner { position: relative; z-index: 2; padding-top: 80px; }
 
-    /* ── FLORAL CREST ── */
-    .floral-crest-wrap {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 40px;
-    }
+    .floral-crest-wrap { display: flex; justify-content: center; margin-bottom: 40px; }
     .floral-crest-img {
-      width: clamp(100px, 16vw, 180px);
-      opacity: 0.88;
+      width: clamp(100px, 16vw, 175px);
+      opacity: 0.90;
     }
 
-    /* ── MEET SECTION ── */
+    /* ── MEET ── */
     .meet-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      display: flex; flex-direction: column; align-items: center;
       padding: 0 20px 60px;
     }
     .meet-grid {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       gap: 0 40px;
-      max-width: 860px;
+      max-width: 820px;
       width: 100%;
       align-items: center;
       margin-top: 36px;
     }
     .meet-person {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 14px;
-    }
-    .meet-photo {
-      width: clamp(120px, 15vw, 180px);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid rgba(255,255,255,0.7);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 12px;
     }
     .meet-photo-placeholder {
-      width: clamp(120px, 15vw, 180px);
+      width: clamp(120px, 14vw, 172px);
       aspect-ratio: 1;
       border-radius: 50%;
       background: linear-gradient(135deg, #f7d4c4 0%, #e8a8a8 100%);
-      border: 4px solid rgba(255,255,255,0.7);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.14);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
+      border: 4px solid rgba(255,255,255,0.75);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.14);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 44px;
     }
     .meet-role {
       font-family: 'Aboreto', cursive;
       font-size: clamp(9px, 1vw, 11px);
-      letter-spacing: 0.22em;
-      color: var(--orange);
-      text-transform: uppercase;
+      letter-spacing: 0.22em; color: var(--orange); text-transform: uppercase;
     }
     .meet-name {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 600;
-      font-size: clamp(22px, 3vw, 36px);
-      color: #2B1A00;
-      line-height: 1.1;
+      font-family: 'Cormorant', serif; font-weight: 600;
+      font-size: clamp(22px, 2.8vw, 34px);
+      color: #2B1A00; line-height: 1.1;
     }
-    .meet-parents-line {
+    .meet-parents {
       font-family: 'Yaldevi', sans-serif;
       font-size: clamp(11px, 1.2vw, 13px);
-      color: var(--olive);
-      line-height: 1.7;
+      color: var(--olive); line-height: 1.7;
     }
-    .meet-parents-line strong { color: #2B1A00; font-weight: 600; }
+    .meet-parents strong { color: #2B1A00; font-weight: 600; }
     .meet-amp {
-      font-family: 'Cormorant Infant', serif;
-      font-style: italic;
-      font-size: clamp(40px, 6vw, 80px);
-      color: var(--teal);
-      line-height: 1;
-      text-align: center;
+      font-family: 'Cormorant Infant', serif; font-style: italic;
+      font-size: clamp(40px, 6vw, 78px); color: var(--teal); line-height: 1;
     }
 
-    /* ── RSVP SECTION ── */
-    .rsvp-section {
-      padding: 40px 20px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    /* ── RSVP ── */
+    .rsvp-section { padding: 20px 20px 80px; display: flex; flex-direction: column; align-items: center; }
     .rsvp-card {
-      background: rgba(255,255,255,0.65);
-      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.68);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-radius: 24px;
-      padding: 48px clamp(28px, 6vw, 64px);
-      max-width: 620px;
-      width: 100%;
-      text-align: center;
+      padding: 44px clamp(28px, 6vw, 64px);
+      max-width: 600px; width: 100%; text-align: center;
       box-shadow: 0 16px 48px rgba(0,0,0,0.08);
     }
     .rsvp-text {
-      font-family: 'Cormorant Infant', serif;
-      font-style: italic;
-      font-size: clamp(15px, 1.8vw, 19px);
-      color: var(--olive);
-      line-height: 1.8;
-      margin-bottom: 28px;
+      font-family: 'Cormorant Infant', serif; font-style: italic;
+      font-size: clamp(15px, 1.7vw, 19px); color: var(--olive);
+      line-height: 1.85; margin-bottom: 28px;
     }
     .rsvp-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--orange-cta);
-      color: #fff;
-      font-family: 'Manrope', sans-serif;
-      font-weight: 600;
-      font-size: 14px;
-      letter-spacing: 0.06em;
-      text-decoration: none;
-      padding: 14px 36px;
-      border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--orange-cta); color: #fff;
+      font-family: 'Manrope', sans-serif; font-weight: 600;
+      font-size: 14px; letter-spacing: 0.06em; text-decoration: none;
+      padding: 14px 36px; border-radius: 999px;
       transition: transform 0.2s, opacity 0.2s;
       box-shadow: 0 6px 20px rgba(248,104,0,0.30);
     }
-    .rsvp-btn:hover { transform: translateY(-2px); opacity: 0.90; }
+    .rsvp-btn:hover { transform: translateY(-2px); opacity: 0.88; }
 
-    /* ── PHOTO STRIP ── */
-    .photos-strip {
-      width: 100%;
-      overflow: hidden;
-      padding: 20px 0 80px;
-    }
+    /* ── PHOTOS STRIP ── */
+    .photos-strip { width: 100%; padding: 20px 0 80px; overflow: hidden; }
     .photos-track {
-      display: flex;
-      gap: 16px;
-      padding: 0 20px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      display: flex; gap: 16px; padding: 0 20px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
     }
     .photos-track::-webkit-scrollbar { display: none; }
     .photo-item {
-      flex: 0 0 clamp(180px, 22vw, 260px);
-      aspect-ratio: 3/4;
-      border-radius: 16px;
-      overflow: hidden;
+      flex: 0 0 clamp(180px, 20vw, 250px);
+      aspect-ratio: 3/4; border-radius: 16px; overflow: hidden;
       scroll-snap-align: start;
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
-    .photo-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
     .photo-item:hover img { transform: scale(1.04); }
 
-    /* ───────────────────────────────
-       GOLD WORLD — Things to Know + Follow
-       ─────────────────────────────── */
+    /* ═══════════════════════════════════════
+       GOLD WORLD
+       ═══════════════════════════════════════ */
     .gold-world {
-      position: relative;
-      width: 100%;
+      position: relative; width: 100%;
       background-image: url('assets/city/gold-section-bg.png');
       background-size: 100% auto;
       background-position: top center;
       background-repeat: no-repeat;
     }
-    .gold-world-inner {
-      position: relative;
-      z-index: 2;
-      padding-top: 80px;
-    }
+    .gold-world-inner { position: relative; z-index: 2; padding-top: 80px; }
 
     /* ── THINGS TO KNOW ── */
-    .things-section {
-      padding: 0 20px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    .things-section { padding: 0 20px 80px; display: flex; flex-direction: column; align-items: center; }
     .things-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      max-width: 900px;
-      width: 100%;
-      margin-top: 40px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 20px; max-width: 860px; width: 100%; margin-top: 40px;
     }
     .thing-card {
-      background: rgba(255,255,255,0.60);
-      backdrop-filter: blur(12px);
-      border-radius: 18px;
-      padding: 28px 20px 24px;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.62);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-radius: 18px; padding: 28px 20px 24px; text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
       transition: transform 0.25s;
     }
     .thing-card:hover { transform: translateY(-4px); }
-    .thing-icon {
-      width: 48px;
-      height: 48px;
-      margin: 0 auto 14px;
-      display: block;
-    }
+    .thing-icon { width: 46px; height: 46px; margin: 0 auto 14px; display: block; }
     .thing-title {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 600;
-      font-size: clamp(15px, 1.8vw, 19px);
-      color: #2B1A00;
-      margin-bottom: 8px;
+      font-family: 'Cormorant', serif; font-weight: 600;
+      font-size: clamp(15px, 1.7vw, 19px); color: #2B1A00; margin-bottom: 8px;
     }
     .thing-desc {
       font-family: 'Yaldevi', sans-serif;
-      font-size: clamp(11px, 1.2vw, 13px);
-      color: var(--olive);
-      line-height: 1.6;
+      font-size: clamp(11px, 1.1vw, 13px); color: var(--olive); line-height: 1.6;
     }
 
-    /* ── FOLLOW / INSTAGRAM ── */
-    .follow-section {
-      padding: 0 20px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    /* ── FOLLOW ── */
+    .follow-section { padding: 0 20px 80px; display: flex; flex-direction: column; align-items: center; }
     .follow-inner {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      max-width: 800px;
-      width: 100%;
+      display: flex; align-items: center; gap: 48px;
+      max-width: 780px; width: 100%;
     }
     .follow-photo {
-      width: clamp(160px, 22vw, 260px);
-      border-radius: 50%;
-      flex-shrink: 0;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.14);
+      width: clamp(150px, 20vw, 240px); border-radius: 50%;
+      flex-shrink: 0; box-shadow: 0 12px 40px rgba(0,0,0,0.14);
     }
     .follow-text { flex: 1; }
     .follow-hashtag {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 600;
-      font-size: clamp(26px, 4vw, 48px);
-      color: #2B1A00;
-      line-height: 1.1;
-      margin-bottom: 14px;
+      font-family: 'Cormorant', serif; font-weight: 600;
+      font-size: clamp(24px, 3.8vw, 46px); color: #2B1A00;
+      line-height: 1.1; margin-bottom: 14px;
     }
     .follow-desc {
       font-family: 'Yaldevi', sans-serif;
-      font-size: clamp(12px, 1.3vw, 15px);
-      color: var(--olive);
-      line-height: 1.7;
+      font-size: clamp(12px, 1.3vw, 15px); color: var(--olive); line-height: 1.75;
     }
 
-    /* ───────────────────────────────
-       COUNTDOWN WORLD — Night + Stars
-       ─────────────────────────────── */
+    /* ═══════════════════════════════════════
+       COUNTDOWN WORLD — Night Palace
+       ═══════════════════════════════════════ */
     .countdown-world {
       position: relative;
       width: 100%;
       min-height: 100vh;
-      background-image: url('assets/city/countdown-bg.png');
-      background-size: cover;
-      background-position: center top;
       overflow: hidden;
     }
+    /* Night palace fills entire section */
+    .countdown-palace-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/city/countdown-bg.png');
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    }
+    /* Dark gradient: sky at top, palace glows at bottom */
     .countdown-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg,
-        rgba(13,21,32,0.5) 0%,
-        rgba(13,21,32,0.7) 60%,
-        rgba(13,21,32,0.92) 100%
+      background: linear-gradient(
+        180deg,
+        rgba(10, 18, 32, 0.70) 0%,
+        rgba(10, 18, 32, 0.45) 40%,
+        rgba(10, 18, 32, 0.20) 70%,
+        rgba(10, 18, 32, 0.10) 100%
       );
     }
-    .stars-canvas {
+    .stars-layer {
       position: absolute;
       inset: 0;
       pointer-events: none;
@@ -673,12 +517,12 @@
       position: absolute;
       border-radius: 50%;
       background: #fff;
-      animation: twinkle var(--twink-dur, 3s) ease-in-out infinite alternate;
-      animation-delay: var(--twink-delay, 0s);
+      animation: twinkle var(--td, 3s) ease-in-out infinite alternate;
+      animation-delay: var(--tdelay, 0s);
     }
     @keyframes twinkle {
-      0%   { opacity: 0.15; transform: scale(0.7); }
-      100% { opacity: 0.95; transform: scale(1.2); }
+      0%   { opacity: 0.12; transform: scale(0.7); }
+      100% { opacity: 0.90; transform: scale(1.3); }
     }
     .countdown-content {
       position: relative;
@@ -686,248 +530,203 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 60px 20px;
+      justify-content: flex-start;
+      padding: 80px 20px 60px;
       text-align: center;
+      min-height: 100vh;
     }
-    .countdown-label {
+    .countdown-eyebrow {
       font-family: 'Aboreto', cursive;
       font-size: clamp(9px, 1.1vw, 13px);
       letter-spacing: 0.28em;
       color: var(--orange);
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
-    .countdown-names {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 600;
-      font-size: clamp(42px, 7vw, 96px);
-      color: var(--cream);
-      line-height: 0.9;
-      margin-bottom: 8px;
-    }
-    .countdown-names .night-amp {
+    .countdown-script {
       font-family: 'Cormorant Infant', serif;
       font-style: italic;
-      font-size: 0.5em;
-      color: var(--teal);
-      display: block;
-      margin: 0.06em 0;
+      font-size: clamp(28px, 4.5vw, 62px);
+      color: var(--cream);
+      line-height: 1.0;
+      margin-bottom: 4px;
     }
-    .countdown-date-line {
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(12px, 1.4vw, 15px);
-      font-weight: 400;
-      color: rgba(243,236,186,0.70);
-      letter-spacing: 0.10em;
-      margin-bottom: 48px;
+    .countdown-timer-label {
+      font-family: 'Aboreto', cursive;
+      font-size: clamp(9px, 1vw, 12px);
+      letter-spacing: 0.3em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      margin-top: 6px;
     }
     .countdown-timer {
       display: flex;
       align-items: flex-start;
-      gap: clamp(20px, 4vw, 48px);
+      gap: clamp(16px, 3.5vw, 40px);
+      margin-bottom: 28px;
     }
-    .timer-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
+    .timer-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .timer-number {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 700;
-      font-size: clamp(52px, 9vw, 110px);
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      font-size: clamp(56px, 10vw, 130px);
       color: var(--cream);
       line-height: 1;
-      min-width: 1.6ch;
+      min-width: 1.5ch;
       text-align: center;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
     .timer-word {
       font-family: 'Aboreto', cursive;
-      font-size: clamp(9px, 1vw, 11px);
+      font-size: clamp(8px, 0.9vw, 11px);
       letter-spacing: 0.22em;
       color: rgba(243,236,186,0.55);
       text-transform: uppercase;
     }
-    .timer-colon {
-      font-family: 'Cormorant Upright', serif;
-      font-weight: 700;
-      font-size: clamp(52px, 9vw, 110px);
-      color: rgba(243,236,186,0.4);
+    .timer-sep {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(48px, 9vw, 110px);
+      color: rgba(243,236,186,0.35);
       line-height: 1;
       padding-top: 0;
     }
+    .countdown-date-line {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(11px, 1.3vw, 14px);
+      font-weight: 400;
+      color: rgba(243,236,186,0.62);
+      letter-spacing: 0.09em;
+      margin-bottom: 40px;
+    }
     .countdown-footer {
-      margin-top: 60px;
       font-family: 'Cormorant Infant', serif;
       font-style: italic;
-      font-size: clamp(14px, 1.8vw, 20px);
-      color: rgba(243,236,186,0.6);
+      font-size: clamp(14px, 1.7vw, 19px);
+      color: rgba(243,236,186,0.55);
     }
 
-    /* ───────────────────────────────
-       SCROLL REVEAL
-       ─────────────────────────────── */
+    /* ── SCROLL REVEAL ── */
     .reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(26px);
+      transition: opacity 0.70s ease, transform 0.70s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.12s; }
-    .reveal-delay-2 { transition-delay: 0.24s; }
-    .reveal-delay-3 { transition-delay: 0.36s; }
-    .reveal-delay-4 { transition-delay: 0.48s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .rd1 { transition-delay: 0.10s; }
+    .rd2 { transition-delay: 0.22s; }
+    .rd3 { transition-delay: 0.34s; }
+    .rd4 { transition-delay: 0.46s; }
 
-    /* ───────────────────────────────
-       RESPONSIVE
-       ─────────────────────────────── */
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .events-grid {
-        grid-template-columns: 1fr;
-        max-width: 320px;
-      }
-      .things-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .meet-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
+      .events-grid { grid-template-columns: 1fr; max-width: 300px; }
+      .things-grid { grid-template-columns: repeat(2, 1fr); }
+      .meet-grid { grid-template-columns: 1fr; gap: 24px; }
       .meet-amp { display: none; }
-      .follow-inner {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero-names { font-size: clamp(40px, 14vw, 80px); }
-      .countdown-timer { gap: 14px; }
+      .follow-inner { flex-direction: column; text-align: center; }
+      .hero-name { font-size: clamp(44px, 13vw, 80px); }
     }
     @media (max-width: 480px) {
-      .things-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .invite-card { padding: 28px 20px; }
-      .route-card { padding: 28px 20px; }
+      .invite-card, .route-card { padding: 28px 18px; }
+      .things-grid { gap: 12px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════
+  <!-- ═══════════════════════════════════════
        ILLUSTRATED WORLD
-       (hero-full-bg.png is 1440×7382 — one giant
-        illustrated sky+teal+palace backdrop)
-       ═══════════════════════════════════════════ -->
+       ═══════════════════════════════════════ -->
   <div class="illustrated-world" id="illustrated-world">
 
-    <!-- FLOATING LANTERNS LAYER -->
+    <!-- LANTERNS (positioned across full hero zone) -->
     <div class="lanterns-layer" id="lanterns-layer"></div>
 
     <!-- ── HERO ── -->
     <section class="hero-section">
-      <img src="assets/city/ganesha.png" alt="Ganesha" class="hero-ganesha reveal" />
-      <div class="hero-label reveal reveal-delay-1">Wedding Invitation</div>
-      <div class="hero-names reveal reveal-delay-2">
-        Harsha<br>
-        <span class="amp">&amp;</span>
-        Maha Lakshmi
-      </div>
-      <img src="assets/city/hero-ornament.png" alt="" class="hero-ornament reveal reveal-delay-3" />
-      <div class="hero-date-badge reveal reveal-delay-4">
-        Friday, 1st May 2026 &nbsp;·&nbsp; V-Convention, Guntur
-      </div>
+      <div class="hero-name reveal">HARSHA VARDHAN</div>
+      <div class="hero-weds reveal rd1">WEDS</div>
+      <div class="hero-name reveal rd2">MAHA LAKSHMI</div>
     </section>
 
-    <!-- ── PALACE SPACER ── -->
-    <div class="palace-spacer">
-      <p class="palace-spacer-tagline reveal">
-        Two hearts. One eternal city.
-      </p>
-    </div>
+    <!-- ── PALACE SPACER (scroll through palace illustration) ── -->
+    <div class="palace-spacer"></div>
 
     <!-- ── INVITATION ── -->
     <section class="invite-section">
-      <div class="invite-eyebrow reveal">With divine blessings</div>
+      <div class="section-eyebrow reveal">With Divine Blessings</div>
       <div class="invite-card reveal">
         <div class="invite-title">
-          You are cordially invited to the wedding of
-          <br>
-          <span class="italic-name">Harsha Vardhan</span>
-          &amp;
-          <span class="italic-name">Maha Lakshmi</span>
+          <em>Harsha Vardhan</em> &amp; <em>Maha Lakshmi</em>
         </div>
         <div class="invite-divider"></div>
         <div class="invite-parents">
-          <span class="line-highlight">Sri Vippadapu Venkateswara Rao &amp; Smt. Jaya Sri</span><br>
-          request the honour of your presence at the marriage of their son<br>
-          <span class="line-highlight">Harsha Vardhan</span><br>
-          with<br>
-          <span class="line-highlight">Maha Lakshmi</span><br>
-          daughter of <span class="line-highlight">Sri Alla Vijay Kumar &amp; Smt. Amitha</span><br>
+          <strong>Sri Vippadapu Venkateswara Rao &amp; Smt. Jaya Sri</strong><br>
+          request the honour of your presence at the wedding of their son<br>
+          <strong>Harsha Vardhan</strong> with <strong>Maha Lakshmi</strong><br>
+          beloved daughter of<br>
+          <strong>Sri Alla Vijay Kumar &amp; Smt. Amitha</strong><br>
           S.V.N. Colony, Guntur
         </div>
         <div class="invite-divider"></div>
         <div class="invite-details">
           <strong>Friday, 1st May 2026</strong><br>
-          10:16 AM Onwards<br>
-          <br>
-          <strong>V-Convention</strong>
+          10:16 AM Onwards
         </div>
-        <div class="invite-venue">Gujjanagundla, Palakaluru Road, Guntur</div>
+        <div class="invite-venue">V-Convention · Gujjanagundla · Palakaluru Road · Guntur</div>
       </div>
     </section>
 
     <!-- ── EVENTS ── -->
     <section class="events-section">
-      <div class="section-eyebrow reveal">Celebrate with us</div>
+      <div class="section-eyebrow reveal">Celebrate With Us</div>
       <div class="section-heading reveal">Ceremonies &amp; Events</div>
       <div class="events-grid">
 
-        <div class="event-card reveal reveal-delay-1">
+        <div class="event-card reveal rd1">
           <div class="event-card-bg"></div>
-          <img class="event-flower-tl" src="assets/city/event-flower.png" alt="" />
-          <img class="event-flower-br" src="assets/city/event-flower.png" alt="" />
-          <div class="event-card-content">
+          <img class="event-flower tl" src="assets/city/event-flower.png" alt="" />
+          <img class="event-flower br" src="assets/city/event-flower.png" alt="" />
+          <div class="event-inner">
             <div class="event-icon">🌸</div>
             <div class="event-name">Mehndi &amp; Sangeet</div>
             <div class="event-time">30 April · Evening</div>
-            <div class="event-desc">An evening of music,<br>dance &amp; mehndi artistry</div>
+            <div class="event-desc">Music, dance &amp;<br>mehndi artistry</div>
           </div>
         </div>
 
-        <div class="event-card reveal reveal-delay-2">
+        <div class="event-card reveal rd2">
           <div class="event-card-bg"></div>
-          <img class="event-flower-tl" src="assets/city/event-flower.png" alt="" />
-          <img class="event-flower-br" src="assets/city/event-flower.png" alt="" />
-          <div class="event-card-content">
+          <img class="event-flower tl" src="assets/city/event-flower.png" alt="" />
+          <img class="event-flower br" src="assets/city/event-flower.png" alt="" />
+          <div class="event-inner">
             <div class="event-icon">🪔</div>
             <div class="event-name">Pellikuthuru</div>
             <div class="event-time">30 April · Night</div>
-            <div class="event-desc">Pre-wedding rituals<br>for the bride &amp; groom</div>
+            <div class="event-desc">Sacred pre-wedding<br>rituals</div>
           </div>
         </div>
 
-        <div class="event-card reveal reveal-delay-3">
+        <div class="event-card reveal rd3">
           <div class="event-card-bg"></div>
-          <img class="event-flower-tl" src="assets/city/event-flower.png" alt="" />
-          <img class="event-flower-br" src="assets/city/event-flower.png" alt="" />
-          <div class="event-card-content">
+          <img class="event-flower tl" src="assets/city/event-flower.png" alt="" />
+          <img class="event-flower br" src="assets/city/event-flower.png" alt="" />
+          <div class="event-inner">
             <div class="event-icon">💍</div>
             <div class="event-name">Wedding</div>
             <div class="event-time">1 May · 10:16 AM</div>
-            <div class="event-desc">The sacred union of<br>Harsha &amp; Maha Lakshmi</div>
+            <div class="event-desc">The sacred union<br>ceremony</div>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- ── ROUTE / VENUE ── -->
+    <!-- ── ROUTE ── -->
     <section class="route-section">
-      <div class="section-eyebrow reveal">Find us here</div>
+      <div class="section-eyebrow reveal">Find Us Here</div>
       <div class="section-heading reveal">Getting There</div>
       <div class="route-card reveal">
         <div class="route-address">
@@ -937,12 +736,9 @@
         </div>
         <a
           href="https://maps.google.com/?q=V-Convention+Palakaluru+Road+Guntur"
-          target="_blank"
-          rel="noopener noreferrer"
+          target="_blank" rel="noopener noreferrer"
           class="route-map-btn"
-        >
-          📍 View on Maps
-        </a>
+        >📍 View on Maps</a>
         <img src="assets/city/vintage-car.png" alt="Vintage car" class="route-car" />
       </div>
     </section>
@@ -950,298 +746,288 @@
   </div><!-- /illustrated-world -->
 
 
-  <!-- ═══════════════════════════════════════════
-       PINK WORLD — Meet the Couple + RSVP + Photos
-       ═══════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════
+       PINK WORLD
+       ═══════════════════════════════════════ -->
   <div class="pink-world">
     <div class="pink-world-inner">
 
-      <!-- Floral crest decoration -->
       <div class="floral-crest-wrap">
         <img src="assets/city/floral-crest.png" alt="" class="floral-crest-img reveal" />
       </div>
 
-      <!-- ── MEET THE COUPLE ── -->
       <section class="meet-section">
         <div class="section-eyebrow reveal">The Happy Couple</div>
         <div class="section-heading reveal">Meet the Couple</div>
         <div class="meet-grid">
-
-          <!-- Groom -->
           <div class="meet-person reveal">
             <div class="meet-photo-placeholder">👨</div>
             <div class="meet-role">The Groom</div>
             <div class="meet-name">Harsha Vardhan</div>
-            <div class="meet-parents-line">
+            <div class="meet-parents">
               Son of<br>
               <strong>Sri Vippadapu Venkateswara Rao</strong><br>
               &amp; <strong>Smt. Jaya Sri</strong>
             </div>
           </div>
-
           <div class="meet-amp">&amp;</div>
-
-          <!-- Bride -->
           <div class="meet-person reveal">
             <div class="meet-photo-placeholder">👩</div>
             <div class="meet-role">The Bride</div>
             <div class="meet-name">Maha Lakshmi</div>
-            <div class="meet-parents-line">
+            <div class="meet-parents">
               Daughter of<br>
               <strong>Sri Alla Vijay Kumar</strong><br>
               &amp; <strong>Smt. Amitha</strong><br>
               S.V.N. Colony, Guntur
             </div>
           </div>
-
         </div>
       </section>
 
-      <!-- ── RSVP ── -->
       <section class="rsvp-section">
-        <div class="section-eyebrow reveal">You&apos;re Invited</div>
+        <div class="section-eyebrow reveal">You Are Invited</div>
         <div class="section-heading reveal">Join the Celebration</div>
         <div class="rsvp-card reveal">
           <p class="rsvp-text">
-            We joyfully request your presence as we embark on this beautiful journey together.
-            Your blessings and love mean the world to us.
-            Please join us on <strong>Friday, 1st May 2026</strong> at
-            <strong>V-Convention, Guntur</strong> as we say our vows.
+            We joyfully request your presence as we begin this beautiful journey together.
+            Your blessings and love mean the world to us. Please join us on
+            <strong>Friday, 1st May 2026</strong> at
+            <strong>V-Convention, Guntur</strong>.
           </p>
-          <a href="https://maps.google.com/?q=V-Convention+Palakaluru+Road+Guntur" target="_blank" rel="noopener noreferrer" class="rsvp-btn">
+          <a href="https://maps.google.com/?q=V-Convention+Palakaluru+Road+Guntur"
+             target="_blank" rel="noopener noreferrer" class="rsvp-btn">
             Get Directions
           </a>
         </div>
       </section>
 
-      <!-- ── PHOTO STRIP ── -->
       <div class="photos-strip">
         <div class="photos-track">
-          <div class="photo-item"><img src="assets/city/photo-1.jpeg" alt="Couple photo 1" /></div>
-          <div class="photo-item"><img src="assets/city/photo-2.jpeg" alt="Couple photo 2" /></div>
-          <div class="photo-item"><img src="assets/city/photo-3.jpeg" alt="Couple photo 3" /></div>
-          <div class="photo-item"><img src="assets/city/photo-4.jpeg" alt="Couple photo 4" /></div>
-          <div class="photo-item"><img src="assets/city/photo-5.jpeg" alt="Couple photo 5" /></div>
-          <div class="photo-item"><img src="assets/city/photo-6.jpeg" alt="Couple photo 6" /></div>
+          <div class="photo-item"><img src="assets/city/photo-1.jpeg" alt="" /></div>
+          <div class="photo-item"><img src="assets/city/photo-2.jpeg" alt="" /></div>
+          <div class="photo-item"><img src="assets/city/photo-3.jpeg" alt="" /></div>
+          <div class="photo-item"><img src="assets/city/photo-4.jpeg" alt="" /></div>
+          <div class="photo-item"><img src="assets/city/photo-5.jpeg" alt="" /></div>
+          <div class="photo-item"><img src="assets/city/photo-6.jpeg" alt="" /></div>
         </div>
       </div>
 
     </div>
-  </div><!-- /pink-world -->
+  </div>
 
 
-  <!-- ═══════════════════════════════════════════
-       GOLD WORLD — Things to Know + Follow
-       ═══════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════
+       GOLD WORLD
+       ═══════════════════════════════════════ -->
   <div class="gold-world">
     <div class="gold-world-inner">
 
-      <!-- ── THINGS TO KNOW ── -->
       <section class="things-section">
         <div class="section-eyebrow reveal">Helpful Info</div>
         <div class="section-heading reveal">Things to Know</div>
         <div class="things-grid">
-
-          <div class="thing-card reveal reveal-delay-1">
-            <img src="assets/city/icon-weather.png" alt="Weather" class="thing-icon" />
+          <div class="thing-card reveal rd1">
+            <img src="assets/city/icon-weather.png" alt="" class="thing-icon" />
             <div class="thing-title">Weather</div>
-            <div class="thing-desc">Expect warm sunny weather in May. Light, comfortable attire recommended.</div>
+            <div class="thing-desc">Warm sunny May weather. Light, comfortable attire recommended.</div>
           </div>
-
-          <div class="thing-card reveal reveal-delay-2">
-            <img src="assets/city/icon-parking.png" alt="Parking" class="thing-icon" />
+          <div class="thing-card reveal rd2">
+            <img src="assets/city/icon-parking.png" alt="" class="thing-icon" />
             <div class="thing-title">Parking</div>
-            <div class="thing-desc">Ample free parking is available at V-Convention premises for all guests.</div>
+            <div class="thing-desc">Ample free parking available at V-Convention for all guests.</div>
           </div>
-
-          <div class="thing-card reveal reveal-delay-3">
-            <img src="assets/city/icon-staff.png" alt="Staff" class="thing-icon" />
+          <div class="thing-card reveal rd3">
+            <img src="assets/city/icon-staff.png" alt="" class="thing-icon" />
             <div class="thing-title">Hospitality</div>
-            <div class="thing-desc">Dedicated staff will be present to assist and welcome all guests warmly.</div>
+            <div class="thing-desc">Dedicated staff will be present to welcome and assist all guests.</div>
           </div>
-
-          <div class="thing-card reveal reveal-delay-4">
-            <img src="assets/city/icon-hashtag.png" alt="Hashtag" class="thing-icon" />
+          <div class="thing-card reveal rd4">
+            <img src="assets/city/icon-hashtag.png" alt="" class="thing-icon" />
             <div class="thing-title">Share Moments</div>
-            <div class="thing-desc">Tag your photos with <strong>#HarshaxMahaLakshmi</strong> to share the love!</div>
+            <div class="thing-desc">Tag photos with <strong>#HarshaxMahaLakshmi</strong></div>
           </div>
-
         </div>
       </section>
 
-      <!-- ── FOLLOW / INSTAGRAM ── -->
       <section class="follow-section">
         <div class="section-eyebrow reveal">Stay Connected</div>
         <div class="section-heading reveal">Share the Joy</div>
         <div class="follow-inner reveal">
-          <img src="assets/city/instagram-bg.png" alt="Instagram" class="follow-photo" />
+          <img src="assets/city/instagram-bg.png" alt="" class="follow-photo" />
           <div class="follow-text">
             <div class="follow-hashtag">#HarshaxMahaLakshmi</div>
             <p class="follow-desc">
-              Capture your moments and share them using our wedding hashtag.
-              We would love to see your memories from our special day!
-              Every photo, every smile, every blessing — let&apos;s celebrate together.
+              Capture your moments and share them with our wedding hashtag.
+              Every photo, every smile, every blessing — let's celebrate together.
             </p>
           </div>
         </div>
       </section>
 
     </div>
-  </div><!-- /gold-world -->
+  </div>
 
 
-  <!-- ═══════════════════════════════════════════
-       COUNTDOWN WORLD — Night Palace + Stars + Timer
-       ═══════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════
+       COUNTDOWN WORLD — Night Palace + Stars
+       ═══════════════════════════════════════ -->
   <div class="countdown-world">
+    <div class="countdown-palace-bg"></div>
     <div class="countdown-overlay"></div>
-    <div class="stars-canvas" id="stars-canvas"></div>
+    <div class="stars-layer" id="stars-layer"></div>
+
     <div class="countdown-content">
-      <div class="countdown-label reveal">Counting down to forever</div>
-      <div class="countdown-names reveal">
-        Harsha<br>
-        <span class="night-amp">&amp;</span>
-        Maha Lakshmi
+      <div class="countdown-eyebrow reveal">Counting Down to Forever</div>
+
+      <div class="countdown-script reveal rd1">Harsha Vardhan</div>
+      <div class="countdown-script reveal rd2" style="font-size: clamp(18px,2.5vw,32px); letter-spacing:0.3em; font-style:normal; font-family:'Aboreto',cursive; margin:6px 0; color:rgba(243,236,186,0.65);">WEDS</div>
+      <div class="countdown-script reveal rd3">Maha Lakshmi</div>
+
+      <div class="countdown-date-line reveal" style="margin-top:16px;">
+        Friday, 1st May 2026 &nbsp;·&nbsp; 10:16 AM &nbsp;·&nbsp; V-Convention, Guntur
       </div>
-      <div class="countdown-date-line reveal">Friday, 1st May 2026 · 10:16 AM · V-Convention, Guntur</div>
+
+      <div class="countdown-timer-label reveal">The countdown begins</div>
 
       <div class="countdown-timer reveal" id="countdown-timer">
         <div class="timer-unit">
           <div class="timer-number" id="cd-days">00</div>
           <div class="timer-word">Days</div>
         </div>
-        <div class="timer-colon">:</div>
+        <div class="timer-sep">:</div>
         <div class="timer-unit">
           <div class="timer-number" id="cd-hours">00</div>
           <div class="timer-word">Hours</div>
         </div>
-        <div class="timer-colon">:</div>
+        <div class="timer-sep">:</div>
         <div class="timer-unit">
           <div class="timer-number" id="cd-mins">00</div>
           <div class="timer-word">Mins</div>
         </div>
-        <div class="timer-colon">:</div>
+        <div class="timer-sep">:</div>
         <div class="timer-unit">
           <div class="timer-number" id="cd-secs">00</div>
           <div class="timer-word">Secs</div>
         </div>
       </div>
 
-      <div class="countdown-footer reveal">With Love, The Families of Harsha &amp; Maha Lakshmi</div>
+      <div class="countdown-footer reveal">
+        With Love, The Families of Harsha &amp; Maha Lakshmi
+      </div>
     </div>
-  </div><!-- /countdown-world -->
+  </div>
 
 
   <script>
-  // ─── 1. LENIS SMOOTH SCROLL ───────────────────
+  // ─── 1. LENIS SMOOTH SCROLL ─────────────────
   (function() {
     if (typeof Lenis === 'undefined') return;
-    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+    var lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
   })();
 
-  // ─── 2. ILLUSTRATED WORLD DYNAMIC HEIGHT ────────
-  // hero-full-bg.png is 1440×7382
-  // Scale height to match current viewport width
-  (function() {
-    var IMG_W = 1440, IMG_H = 7382;
-    var world = document.getElementById('illustrated-world');
-    function setHeight() {
-      var vw = window.innerWidth;
-      world.style.height = Math.round(IMG_H * (vw / IMG_W)) + 'px';
-    }
-    setHeight();
-    window.addEventListener('resize', setHeight);
-  })();
-
-  // ─── 3. GENERATE FLOATING LANTERNS ────────────
+  // ─── 2. GENERATE LANTERNS ───────────────────
+  // Sizes match original: 80–200px wide, spread across the full hero+palace zone
   (function() {
     var layer = document.getElementById('lanterns-layer');
-    var lanterns = [
-      // [left%, top%, size, dur, delay, rotA, rotB, op]
-      [5,  3,  44, 5.2, 0.0,  '-4deg', '3deg',  0.88],
-      [12, 7,  36, 6.5, 0.8,  '-2deg', '5deg',  0.75],
-      [20, 2,  52, 4.8, 1.4,  '-5deg', '2deg',  0.92],
-      [28, 8,  38, 7.0, 0.3,  '-3deg', '4deg',  0.82],
-      [36, 1,  48, 5.5, 2.0,  '-6deg', '2deg',  0.78],
-      [44, 5,  42, 6.2, 0.7,  '-2deg', '6deg',  0.85],
-      [52, 3,  56, 5.0, 1.2,  '-4deg', '3deg',  0.90],
-      [60, 8,  34, 7.5, 0.4,  '-3deg', '5deg',  0.72],
-      [68, 2,  50, 4.6, 1.8,  '-5deg', '2deg',  0.87],
-      [76, 6,  40, 6.8, 0.1,  '-2deg', '4deg',  0.80],
-      [84, 4,  46, 5.3, 1.5,  '-4deg', '3deg',  0.93],
-      [91, 9,  36, 6.0, 0.9,  '-3deg', '5deg',  0.76],
-      [97, 1,  54, 4.9, 2.3,  '-5deg', '2deg',  0.84],
-      [8,  12, 40, 7.2, 0.5,  '-2deg', '6deg',  0.79],
-      [17, 15, 46, 5.6, 1.7,  '-4deg', '3deg',  0.88],
-      [25, 11, 50, 6.4, 0.2,  '-3deg', '4deg',  0.81],
-      [33, 17, 38, 5.1, 2.1,  '-6deg', '2deg',  0.74],
-      [41, 13, 44, 7.3, 0.6,  '-2deg', '5deg',  0.89],
-      [49, 16, 52, 4.7, 1.3,  '-4deg', '3deg',  0.83],
-      [57, 10, 36, 6.7, 0.0,  '-3deg', '4deg',  0.77],
-      [65, 14, 48, 5.4, 1.9,  '-5deg', '2deg',  0.91],
-      [73, 12, 42, 6.1, 0.8,  '-2deg', '5deg',  0.86],
-      [80, 16, 54, 5.8, 1.1,  '-4deg', '3deg',  0.73],
-      [88, 11, 38, 7.0, 2.4,  '-3deg', '6deg',  0.94],
-      [95, 15, 50, 4.5, 0.3,  '-5deg', '2deg',  0.80],
-      [3,  19, 44, 6.3, 1.6,  '-2deg', '4deg',  0.85],
-      [22, 22, 40, 5.9, 0.4,  '-4deg', '3deg',  0.78],
-      [45, 20, 56, 6.6, 2.0,  '-3deg', '5deg',  0.87],
-      [70, 18, 46, 5.2, 1.0,  '-5deg', '2deg',  0.82],
-      [90, 21, 38, 7.1, 0.7,  '-2deg', '6deg',  0.76]
+    // [left%, top-vh%, width-px, dur, delay, ra, rb]
+    var data = [
+      // Across the sky (top 0-25% of viewport heights)
+      [ 2,  5, 110, 5.2, 0.0, '-5deg',  '4deg'],
+      [ 8, 12, 155, 6.5, 0.8, '-3deg',  '5deg'],
+      [15,  3, 130, 4.8, 1.4, '-6deg',  '3deg'],
+      [22, 18,  90, 7.0, 0.3, '-4deg',  '4deg'],
+      [28,  7, 175, 5.5, 2.0, '-5deg',  '3deg'],
+      [35, 14, 120, 6.2, 0.7, '-3deg',  '6deg'],
+      [43,  2, 165, 5.0, 1.2, '-4deg',  '4deg'],
+      [50, 20, 105, 7.5, 0.4, '-3deg',  '5deg'],
+      [57,  8, 195, 4.6, 1.8, '-5deg',  '3deg'],
+      [63, 15,  80, 6.8, 0.1, '-2deg',  '4deg'],
+      [70,  4, 140, 5.3, 1.5, '-4deg',  '3deg'],
+      [78, 10, 160, 6.0, 0.9, '-3deg',  '5deg'],
+      [85,  6, 115, 4.9, 2.3, '-5deg',  '3deg'],
+      [91, 17,  95, 7.2, 0.5, '-2deg',  '6deg'],
+      [97,  2, 185, 5.6, 1.7, '-4deg',  '4deg'],
+      // Mid zone (25-60% of viewport)
+      [ 5, 35, 200, 6.4, 0.2, '-5deg',  '3deg'],
+      [12, 42, 135, 5.1, 2.1, '-3deg',  '5deg'],
+      [20, 50, 115, 7.3, 0.6, '-4deg',  '4deg'],
+      [30, 38, 180, 4.7, 1.3, '-5deg',  '3deg'],
+      [40, 55,  90, 6.7, 0.0, '-2deg',  '4deg'],
+      [52, 44, 150, 5.4, 1.9, '-5deg',  '3deg'],
+      [60, 32, 125, 6.1, 0.8, '-3deg',  '6deg'],
+      [68, 58, 170, 5.8, 1.1, '-4deg',  '4deg'],
+      [75, 40,  85, 7.0, 2.4, '-3deg',  '5deg'],
+      [82, 52, 145, 4.5, 0.3, '-5deg',  '3deg'],
+      [88, 30, 110, 6.3, 1.6, '-2deg',  '4deg'],
+      [94, 47, 190, 5.9, 0.4, '-4deg',  '4deg'],
+      // Lower zone (visible in palace spacer)
+      [10, 72, 165, 6.6, 2.0, '-4deg',  '5deg'],
+      [45, 68, 130, 5.2, 1.0, '-3deg',  '4deg'],
+      [80, 75, 115, 7.1, 0.7, '-5deg',  '3deg']
     ];
 
-    lanterns.forEach(function(l, i) {
-      var left = l[0], top = l[1], size = l[2];
-      var dur = l[3], delay = l[4];
-      var rotA = l[5], rotB = l[6], op = l[7];
-      // Alternate small/large lantern images
-      var src = i % 3 === 0
+    data.forEach(function(d, i) {
+      var left = d[0], topVh = d[1], w = d[2],
+          dur = d[3], delay = d[4], ra = d[5], rb = d[6];
+      var src = (i % 3 === 0)
         ? 'assets/city/lantern-lg.png'
         : 'assets/city/lantern-sm.png';
       var div = document.createElement('div');
       div.className = 'lantern';
       div.style.cssText = [
         'left:' + left + '%',
-        'top:' + top + '%',
-        'width:' + size + 'px',
+        'top:' + topVh + 'vh',
+        'width:' + w + 'px',
         '--dur:' + dur + 's',
         '--delay:-' + delay + 's',
-        '--rot-a:' + rotA,
-        '--rot-b:' + rotB,
-        '--op:' + op
+        '--ra:' + ra,
+        '--rb:' + rb
       ].join(';');
       var img = document.createElement('img');
-      img.src = src;
-      img.alt = '';
-      img.style.cssText = 'width:100%;display:block;';
+      img.src = src; img.alt = '';
       div.appendChild(img);
       layer.appendChild(div);
     });
   })();
 
-  // ─── 4. GENERATE TWINKLING STARS ─────────────
+  // ─── 3. LANTERN PARALLAX ON SCROLL ──────────
   (function() {
-    var canvas = document.getElementById('stars-canvas');
-    var count = 70;
-    for (var i = 0; i < count; i++) {
+    var layer = document.getElementById('lanterns-layer');
+    var ticking = false;
+    function updateParallax() {
+      var sy = window.scrollY;
+      // Lanterns scroll at 0.55x speed → appear to float upward relative to bg
+      layer.style.transform = 'translateY(' + (sy * 0.45) + 'px)';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive: true });
+  })();
+
+  // ─── 4. TWINKLING STARS ─────────────────────
+  (function() {
+    var canvas = document.getElementById('stars-layer');
+    for (var i = 0; i < 65; i++) {
       var s = document.createElement('div');
       s.className = 'star';
-      var size = Math.random() * 2.5 + 0.8;
+      var sz = Math.random() * 2.4 + 0.8;
       s.style.cssText = [
         'left:' + (Math.random() * 100) + '%',
-        'top:' + (Math.random() * 80) + '%',
-        'width:' + size + 'px',
-        'height:' + size + 'px',
-        '--twink-dur:' + (Math.random() * 3 + 2) + 's',
-        '--twink-delay:-' + (Math.random() * 4) + 's'
+        'top:' + (Math.random() * 55) + '%',
+        'width:' + sz + 'px',
+        'height:' + sz + 'px',
+        '--td:' + (Math.random() * 3 + 2) + 's',
+        '--tdelay:-' + (Math.random() * 4) + 's'
       ].join(';');
       canvas.appendChild(s);
     }
   })();
 
-  // ─── 5. COUNTDOWN TIMER ─────────────────────
+  // ─── 5. COUNTDOWN ───────────────────────────
   (function() {
     var target = new Date('2026-05-01T10:16:00+05:30').getTime();
     var els = {
@@ -1252,37 +1038,27 @@
     };
     function pad(n) { return String(n).padStart(2, '0'); }
     function tick() {
-      var now = Date.now();
-      var diff = target - now;
+      var diff = target - Date.now();
       if (diff <= 0) {
         els.d.textContent = els.h.textContent = els.m.textContent = els.s.textContent = '00';
         return;
       }
-      var days  = Math.floor(diff / 86400000);
-      var hours = Math.floor((diff % 86400000) / 3600000);
-      var mins  = Math.floor((diff % 3600000) / 60000);
-      var secs  = Math.floor((diff % 60000) / 1000);
-      els.d.textContent = pad(days);
-      els.h.textContent = pad(hours);
-      els.m.textContent = pad(mins);
-      els.s.textContent = pad(secs);
+      els.d.textContent = pad(Math.floor(diff / 86400000));
+      els.h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      els.m.textContent = pad(Math.floor((diff % 3600000) / 60000));
+      els.s.textContent = pad(Math.floor((diff % 60000) / 1000));
     }
-    tick();
-    setInterval(tick, 1000);
+    tick(); setInterval(tick, 1000);
   })();
 
-  // ─── 6. INTERSECTION OBSERVER (scroll reveal) ─
+  // ─── 6. SCROLL REVEAL ───────────────────────
   (function() {
-    var items = document.querySelectorAll('.reveal');
     var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12 });
-    items.forEach(function(el) { io.observe(el); });
+    }, { threshold: 0.10 });
+    document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
   })();
   </script>
 </body>
