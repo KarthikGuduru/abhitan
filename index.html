@@ -37,6 +37,7 @@
     .illustrated-world {
       position: relative;
       width: 100%;
+      overflow: hidden; /* hard-clips any lantern that floats below this world */
       background-image: url('assets/city/hero-full-bg.png');
       background-size: 100% auto;
       background-position: top center;
@@ -679,7 +680,7 @@
     /* Frame + photo carousel */
     .bg-frame-wrap {
       position: relative;
-      width: clamp(360px, 54vw, 640px);
+      width: clamp(270px, 40vw, 480px);
     }
     .bg-photo-clip {
       position: absolute;
@@ -932,22 +933,47 @@
         <div class="section-heading reveal">Things to Know</div>
         <div class="things-grid">
           <div class="thing-card reveal rd1">
-            <img src="assets/city/icon-weather.png" alt="" class="thing-icon" />
+            <svg class="thing-icon" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="23" cy="23" r="7.5" stroke="#45A086" stroke-width="2"/>
+              <line x1="23" y1="4" x2="23" y2="9" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <line x1="23" y1="37" x2="23" y2="42" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <line x1="4" y1="23" x2="9" y2="23" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <line x1="37" y1="23" x2="42" y2="23" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <line x1="9.4" y1="9.4" x2="12.9" y2="12.9" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <line x1="33.1" y1="33.1" x2="36.6" y2="36.6" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <line x1="9.4" y1="36.6" x2="12.9" y2="33.1" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <line x1="33.1" y1="12.9" x2="36.6" y2="9.4" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+            </svg>
             <div class="thing-title">Weather</div>
             <div class="thing-desc">Warm sunny May weather. Light, comfortable attire recommended.</div>
           </div>
           <div class="thing-card reveal rd2">
-            <img src="assets/city/icon-parking.png" alt="" class="thing-icon" />
+            <svg class="thing-icon" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="10" width="36" height="26" rx="5" stroke="#45A086" stroke-width="2"/>
+              <circle cx="13" cy="30" r="3" stroke="#45A086" stroke-width="2"/>
+              <circle cx="33" cy="30" r="3" stroke="#45A086" stroke-width="2"/>
+              <path d="M5 20h36" stroke="#45A086" stroke-width="2"/>
+              <path d="M14 10l3-4h12l3 4" stroke="#45A086" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
             <div class="thing-title">Parking</div>
             <div class="thing-desc">Ample free parking available at V-Convention for all guests.</div>
           </div>
           <div class="thing-card reveal rd3">
-            <img src="assets/city/icon-staff.png" alt="" class="thing-icon" />
+            <svg class="thing-icon" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="23" cy="13" r="5.5" stroke="#45A086" stroke-width="2"/>
+              <path d="M10 39c0-7.18 5.82-13 13-13s13 5.82 13 13" stroke="#45A086" stroke-width="2" stroke-linecap="round"/>
+              <path d="M30 16l2 3 5-5" stroke="#45A086" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             <div class="thing-title">Hospitality</div>
             <div class="thing-desc">Dedicated staff will be present to welcome and assist all guests.</div>
           </div>
           <div class="thing-card reveal rd4">
-            <img src="assets/city/icon-hashtag.png" alt="" class="thing-icon" />
+            <svg class="thing-icon" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="14" y1="9" x2="11" y2="37" stroke="#45A086" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="27" y1="9" x2="24" y2="37" stroke="#45A086" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="8" y1="18" x2="38" y2="18" stroke="#45A086" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="7" y1="28" x2="37" y2="28" stroke="#45A086" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
             <div class="thing-title">Share Moments</div>
             <div class="thing-desc">Tag photos with <strong>#HarshaxMahaLakshmi</strong></div>
           </div>
@@ -1071,19 +1097,12 @@
       [79, 118, 63, 6.1, 0.9, '-8deg', '2deg'],
       [95, 133, 88, 5.6, 1.7, '-4deg', '7deg'],
 
-      // ── INVITE / EVENTS ENTRY (170–250vh) ──
+      // ── INVITE / CEREMONIES HEADING (170–215vh) — last lanterns ──
       [ 7, 178, 66, 6.6, 0.3, '-6deg', '4deg'],
       [21, 208, 84, 5.2, 1.1, '-3deg', '7deg'],
       [39, 193, 50, 7.0, 1.8, '-5deg', '3deg'],
       [62, 183, 74, 6.3, 0.5, '-7deg', '4deg'],
-      [78, 223, 58, 5.7, 1.3, '-2deg', '6deg'],
-      [94, 200, 86, 6.9, 0.8, '-5deg', '3deg'],
-
-      // ── CEREMONIES AREA (265–315vh) ──
-      [ 8, 272, 68, 5.5, 1.0, '-4deg', '5deg'],
-      [30, 288, 52, 7.1, 0.4, '-7deg', '3deg'],
-      [69, 278, 76, 6.4, 1.5, '-3deg', '6deg'],
-      [90, 298, 60, 5.9, 0.7, '-6deg', '4deg']
+      [94, 200, 86, 6.9, 0.8, '-5deg', '3deg']
     ];
 
     var RISE_DUR = 1.6; // seconds for entry animation
