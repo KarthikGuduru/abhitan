@@ -60,10 +60,11 @@
       opacity: 0; /* hidden until JS adds entry animation */
     }
     .lantern img { width: 100%; display: block; }
-    /* Entry: rise up from below and fade in */
+    /* Entry: rise up from below — slow, floaty, genuinely from offscreen */
     @keyframes lanternRise {
-      from { opacity: 0; transform: translateY(80px) rotate(var(--ra, -3deg)); }
-      to   { opacity: 1; transform: translateY(0)    rotate(var(--ra, -3deg)); }
+      0%   { opacity: 0; transform: translateY(260px) rotate(var(--ra, -3deg)); }
+      30%  { opacity: 0.55; }
+      100% { opacity: 1; transform: translateY(0)     rotate(var(--ra, -3deg)); }
     }
     /* Idle bob after entry */
     @keyframes lanternBob {
@@ -744,7 +745,11 @@
       .meet-amp { display: none; }
       .follow-inner { flex-direction: column; text-align: center; }
 
-      /* Hero names — fit comfortably on phones without clipping */
+      /* Hero names — push up into the sky above the palace */
+      .hero-section {
+        justify-content: flex-start;
+        padding-top: 8vh;
+      }
       .hero-name { font-size: clamp(30px, 9vw, 60px); letter-spacing: -0.02em; }
       .hero-weds { font-size: 11px; letter-spacing: 0.48em; margin: 6px 0; }
       .hero-ganesha { width: clamp(72px, 16vw, 110px); margin-bottom: 6px; }
@@ -752,8 +757,8 @@
       /* Invite title fits on two lines cleanly */
       .invite-title { font-size: clamp(22px, 6.2vw, 36px); line-height: 1.1; }
 
-      /* Palace spacer tighter on mobile so we reach the invite sooner */
-      .palace-spacer { min-height: 60vh; }
+      /* Palace spacer much shorter on mobile — invite sits right at the fountain */
+      .palace-spacer { min-height: 28vh; }
 
       /* INVITE on mobile — drop the white card, let text sit on the painted bg */
       .invite-section { padding: 40px 20px 40px; }
@@ -1156,11 +1161,17 @@
     ];
 
     // Lanterns are authored at desktop sizes. On phones we scale them
-    // down so the hero/palace art can breathe.
+    // down hard so the hero/palace art can breathe.
     var isPhone = window.innerWidth <= 768;
-    var SCALE   = isPhone ? 0.58 : 1.0;
+    var SCALE   = isPhone ? 0.42 : 1.0;
 
-    var RISE_DUR = 1.6; // seconds for entry animation
+    // On phones we also cut off lanterns past the fountain zone (they
+    // were drifting into the green invitation area).
+    if (isPhone) {
+      data = data.filter(function(d) { return d[1] <= 75; });
+    }
+
+    var RISE_DUR = isPhone ? 2.2 : 1.6; // longer, floatier rise on phones
     data.forEach(function(d, i) {
       var left = d[0], topVh = d[1], w = Math.round(d[2] * SCALE),
           dur = d[3], entryDelay = d[4], ra = d[5], rb = d[6];
