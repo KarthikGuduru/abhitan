@@ -743,10 +743,59 @@
       .meet-grid { grid-template-columns: 1fr; gap: 24px; }
       .meet-amp { display: none; }
       .follow-inner { flex-direction: column; text-align: center; }
-      .hero-name { font-size: clamp(44px, 13vw, 80px); }
+
+      /* Hero names — fit comfortably on phones without clipping */
+      .hero-name { font-size: clamp(30px, 9vw, 60px); letter-spacing: -0.02em; }
+      .hero-weds { font-size: 11px; letter-spacing: 0.48em; margin: 6px 0; }
+      .hero-ganesha { width: clamp(72px, 16vw, 110px); margin-bottom: 6px; }
+
+      /* Invite title fits on two lines cleanly */
+      .invite-title { font-size: clamp(22px, 6.2vw, 36px); line-height: 1.1; }
+
+      /* Palace spacer tighter on mobile so we reach the invite sooner */
+      .palace-spacer { min-height: 60vh; }
+
+      /* INVITE on mobile — drop the white card, let text sit on the painted bg */
+      .invite-section { padding: 40px 20px 40px; }
+      .invite-card {
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: none;
+        padding: 8px 4px;
+      }
+      .invite-title       { color: var(--cream); }
+      .invite-title em    { color: var(--cream); font-weight: 500; }
+      .invite-parents     { color: rgba(243,236,186,0.82); }
+      .invite-parents strong { color: var(--cream); }
+      .invite-details     { color: rgba(243,236,186,0.92); }
+      .invite-details strong { color: var(--cream); }
+      .invite-venue       { color: var(--cream); opacity: 0.85; }
+      .invite-divider     {
+        background: linear-gradient(90deg, transparent, rgba(243,236,186,0.55), transparent);
+      }
+
+      /* Photo frame fills the viewport width on phones */
+      .bg-frame-wrap { width: min(380px, 88vw); }
+      .bride-groom-section { padding: 40px 16px 60px; }
+      .bg-heading { font-size: clamp(46px, 13vw, 84px); margin-bottom: 20px; }
+      .bg-para { margin-bottom: 28px; font-size: clamp(13px, 3.4vw, 16px); line-height: 1.65; }
+
+      /* Follow section — circle photo smaller & cleaner on phones */
+      .follow-photo { width: clamp(160px, 50vw, 220px); }
+      .follow-inner { gap: 24px; }
+
+      /* Route card — smoother padding */
+      .route-card { padding: 32px 22px 28px; }
+      .route-address { font-size: 17px; line-height: 1.7; }
+
+      /* Countdown timer — give numbers breathing room */
+      .countdown-timer { gap: 14px; }
+      .timer-number { font-size: clamp(44px, 13vw, 74px); }
+      .timer-sep { font-size: clamp(38px, 11vw, 64px); }
     }
     @media (max-width: 480px) {
-      .invite-card, .route-card { padding: 28px 18px; }
+      .route-card { padding: 28px 18px; }
       .things-grid { gap: 12px; }
     }
   </style>
@@ -1098,16 +1147,22 @@
       [95, 133, 88, 5.6, 1.7, '-4deg', '7deg'],
 
       // ── INVITE / CEREMONIES HEADING (170–215vh) — last lanterns ──
-      [ 7, 178, 66, 6.6, 0.3, '-6deg', '4deg'],
-      [21, 195, 84, 5.2, 1.1, '-3deg', '7deg'],
-      [39, 185, 50, 7.0, 1.8, '-5deg', '3deg'],
-      [62, 183, 74, 6.3, 0.5, '-7deg', '4deg'],
-      [94, 192, 86, 6.9, 0.8, '-5deg', '3deg']
+      // Capped at 178vh so none bleeds into Route / "Getting There" heading.
+      [ 7, 166, 62, 6.6, 0.3, '-6deg', '4deg'],
+      [21, 174, 78, 5.2, 1.1, '-3deg', '7deg'],
+      [39, 170, 48, 7.0, 1.8, '-5deg', '3deg'],
+      [62, 164, 70, 6.3, 0.5, '-7deg', '4deg'],
+      [94, 178, 80, 6.9, 0.8, '-5deg', '3deg']
     ];
+
+    // Lanterns are authored at desktop sizes. On phones we scale them
+    // down so the hero/palace art can breathe.
+    var isPhone = window.innerWidth <= 768;
+    var SCALE   = isPhone ? 0.58 : 1.0;
 
     var RISE_DUR = 1.6; // seconds for entry animation
     data.forEach(function(d, i) {
-      var left = d[0], topVh = d[1], w = d[2],
+      var left = d[0], topVh = d[1], w = Math.round(d[2] * SCALE),
           dur = d[3], entryDelay = d[4], ra = d[5], rb = d[6];
       var src = (i % 3 === 0)
         ? 'assets/city/lantern-lg.png'
@@ -1135,10 +1190,13 @@
   (function() {
     var layer = document.getElementById('lanterns-layer');
     var ticking = false;
+    // Gentler parallax on phones so lanterns stay contained in the hero/palace zone
+    // and don't drift into the Route / Getting-There area below the world.
+    var FACTOR = (window.innerWidth <= 768) ? 0.30 : 0.45;
     function updateParallax() {
       var sy = window.scrollY;
-      // Lanterns scroll at 0.55x speed → appear to float upward relative to bg
-      layer.style.transform = 'translateY(' + (sy * 0.45) + 'px)';
+      // Lanterns scroll at FACTOR speed → appear to float upward relative to bg
+      layer.style.transform = 'translateY(' + (sy * FACTOR) + 'px)';
       ticking = false;
     }
     window.addEventListener('scroll', function() {
