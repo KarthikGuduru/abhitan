@@ -72,13 +72,11 @@
       100% { transform: translateY(-20px) rotate(var(--rb,  3deg)); }
     }
 
-    /* ── GANESHA ── */
+    /* ── GANESHA (lives above the invite card now, floating on the green) ── */
     .hero-ganesha {
-      width: clamp(88px, 11vw, 148px);
+      width: clamp(78px, 9vw, 128px);
       display: block;
-      margin-bottom: 12px;
-      opacity: 0;
-      animation: heroRise 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+      margin: 0 auto 18px;
       filter: drop-shadow(0 2px 12px rgba(0,0,0,0.18));
     }
 
@@ -773,16 +771,16 @@
       }
       .hero-name { font-size: clamp(30px, 9vw, 60px); letter-spacing: -0.02em; }
       .hero-weds { font-size: 11px; letter-spacing: 0.48em; margin: 6px 0; }
-      .hero-ganesha { width: clamp(72px, 16vw, 110px); margin-bottom: 6px; }
+      .hero-ganesha { width: clamp(68px, 15vw, 104px); margin: 0 auto 10px; }
 
       /* Invite title fits on two lines cleanly */
       .invite-title { font-size: clamp(22px, 6.2vw, 36px); line-height: 1.1; }
 
-      /* Palace spacer much shorter on mobile — invite sits right at the fountain */
-      .palace-spacer { min-height: 28vh; }
+      /* Palace spacer tiny on mobile — the invite block hugs the fountain */
+      .palace-spacer { min-height: 6vh; }
 
-      /* INVITE on mobile — drop the white card, let text sit on the painted bg */
-      .invite-section { padding: 40px 20px 40px; }
+      /* INVITE on mobile — drop the white card, hug the fountain above */
+      .invite-section { padding: 4px 20px 30px; }
       .invite-card {
         background: transparent;
         backdrop-filter: none;
@@ -836,9 +834,8 @@
     <!-- LANTERNS (positioned across full hero zone) -->
     <div class="lanterns-layer" id="lanterns-layer"></div>
 
-    <!-- ── HERO ── -->
+    <!-- ── HERO (names only — keep the sky clean) ── -->
     <section class="hero-section">
-      <img class="hero-ganesha" src="assets/city/ganesha.png" alt="Ganesha" />
       <div class="hero-name" style="--ha:0.55s">HARSHA VARDHAN</div>
       <div class="hero-weds">WEDS</div>
       <div class="hero-name" style="--ha:0.75s">MAHA LAKSHMI</div>
@@ -849,6 +846,7 @@
 
     <!-- ── INVITATION ── -->
     <section class="invite-section">
+      <img class="hero-ganesha reveal" src="assets/city/ganesha.png" alt="Ganesha" />
       <div class="section-eyebrow reveal">With Divine Blessings</div>
       <div class="invite-card reveal">
         <div class="invite-title">
@@ -885,7 +883,7 @@
           <div class="event-inner">
             <div class="event-icon">🌸</div>
             <div class="event-name">Mehndi &amp; Sangeet</div>
-            <div class="event-time">30 April · Evening</div>
+            <div class="event-time">29 April · Evening</div>
             <div class="event-desc">Music, dance &amp;<br>mehndi artistry</div>
           </div>
         </div>
@@ -1061,21 +1059,6 @@
             </svg>
             <div class="thing-title">Share Moments</div>
             <div class="thing-desc">Tag photos with <strong>#HarshaxMahaLakshmi</strong></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="follow-section">
-        <div class="section-eyebrow reveal">Stay Connected</div>
-        <div class="section-heading reveal">Share the Joy</div>
-        <div class="follow-inner reveal">
-          <img src="assets/city/instagram-bg.png" alt="" class="follow-photo" />
-          <div class="follow-text">
-            <div class="follow-hashtag">#HarshaxMahaLakshmi</div>
-            <p class="follow-desc">
-              Capture your moments and share them with our wedding hashtag.
-              Every photo, every smile, every blessing — let's celebrate together.
-            </p>
           </div>
         </div>
       </section>
